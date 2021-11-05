@@ -1,16 +1,16 @@
 // router.js
 
 /** Some hints for this router:
-  *   - it shouldn't be a terribly long file, each function is pretty short.
-  *   - the functions being passed in should mostly be stored so that
-  *     you can call them later when you want to navigate to a page
-  *   - you should be pushing to history (only when the 'popstate' event
-  *     hasn't fired) so that you can use forward / backward buttons
-  *   - You should be using hashes to update the URL (e.g. 
-  *     https://somewebsite.com#somePage) - the hash is the #somePage part.
-  *     It's accessible via window.location.hash and using them lets you
-  *     easily modify the URL without refreshing the page or anything
-  */
+ *   - it shouldn't be a terribly long file, each function is pretty short.
+ *   - the functions being passed in should mostly be stored so that
+ *     you can call them later when you want to navigate to a page
+ *   - you should be pushing to history (only when the 'popstate' event
+ *     hasn't fired) so that you can use forward / backward buttons
+ *   - You should be using hashes to update the URL (e.g.
+ *     https://somewebsite.com#somePage) - the hash is the #somePage part.
+ *     It's accessible via window.location.hash and using them lets you
+ *     easily modify the URL without refreshing the page or anything
+ */
 
 export class Router {
   /**
@@ -24,6 +24,8 @@ export class Router {
      * TODO Part 1
      * Fill in this function as specified in the comment above
      */
+    homeFunc();
+    this["function"] = homeFunc;
   }
 
   /**
@@ -38,6 +40,7 @@ export class Router {
      * TODO Part 1
      * Fill in this function as specified in the comment above
      */
+    this[page] = pageFunc;
   }
 
   /**
@@ -52,5 +55,31 @@ export class Router {
      * TODO Part 1
      * Fill in this function as specified in the comment above
      */
+    console.log(history.state);
+    if (page === "home") {
+      const recipeList = document.querySelector("section");
+      const recipe = document.querySelector(".section--recipe-expand");
+      // recipe.classList.toggle("shown");
+      if (recipe.classList.contains("shown")) {
+        recipe.classList.toggle("shown");
+        console.log("recipe toggled");
+      }
+      if (!recipeList.classList.contains("shown")) {
+        recipeList.classList.toggle("shown");
+      }
+      if (!statePopped) {
+        console.log("pushed from router");
+        // history.pushState({ page: "home" }, "", "index.html");
+      }
+    } else {
+      if (this[page]) {
+        this[page]();
+        this["function"]();
+      }
+
+      if (!statePopped) {
+        history.pushState({ page }, "", location + "#" + page);
+      }
+    }
   }
 }
