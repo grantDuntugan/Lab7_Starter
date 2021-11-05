@@ -12,10 +12,10 @@ self.addEventListener("install", function (event) {
   // Perform install steps
   var CACHE_NAME = "my-site-cache-v1";
   var urlsToCache = [
-    "/index.html",
-    "/styles/main.css",
-    "/scripts/main.js",
-    "scripts/Router.js",
+    "index.html",
+    "assets/styles/main.css",
+    "assets/scripts/main.js",
+    "assets/scripts/Router.js",
   ];
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
